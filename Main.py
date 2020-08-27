@@ -4,7 +4,6 @@ import os
 import psutil
 import datetime
 import subprocess
-import signal
 import threading
 import shutil
 from pysteamcmdwrapper import SteamCMD, SteamCMDException
