@@ -44,7 +44,7 @@ def logging(content):
 
 
 def checkram():
-    global PID, NAME, mem_per,PID_Fallback
+    global PID, NAME, mem_per, PID_Fallback
     try:
         # Attempt at detecting application memory usage
         for process in psutil.process_iter():
