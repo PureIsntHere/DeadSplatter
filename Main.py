@@ -20,6 +20,8 @@ Server_Folder = Server_Path.strip('deadmatterServer.exe')
 SteamCMDInstall = config['Steam_CMD_Path']
 RamRefresh = config['RamRefresh']
 AutoUpdate = config['AutoUpdate']
+Ram_Refresh_Timer = config['Ram_Clean_Timer']
+Server_Check_Timer = config['Server_Check_Timer']
 
 # Global Vars
 PID = 0
@@ -110,7 +112,7 @@ def Auto_Restart():
                 f'USING FALLBACK|Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | System Ram Cutoff:{Max_System_Ram}%')
         checkram()
         check_restart()
-        sleep(10)
+        sleep(Server_Check_Timer)
 
 
 def Ram_Cleaner():
@@ -118,7 +120,7 @@ def Ram_Cleaner():
         try:
             os.startfile('RamCleaner.bat')
             logging('Cleaned Ram')
-            sleep(60)
+            sleep(Ram_Refresh_Timer)
         except:
             logging('Error Cleaning Ram')
 
