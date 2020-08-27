@@ -55,3 +55,4 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 
 **Known Issues**
 1) Certain Windows Server Builds have weird permissions that cause the script to run in failsafe mode 24/7
+Possible fix for some users is to run through elevated Powershell.
