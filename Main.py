@@ -7,6 +7,7 @@ import subprocess
 import threading
 import shutil
 from pysteamcmdwrapper import SteamCMD, SteamCMDException
+#Clear Function for CMD
 def clear(): return os.system('cls')
 
 
