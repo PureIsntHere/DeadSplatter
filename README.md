@@ -39,6 +39,10 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 
 3) Customize config.json to your needs.
 
+Example: "max_ram":50 <- Max amount of ram the server can use before it is restarted. 
+
+Example2: "max_system_ram":50 <- Max amount of ram load the entire system can be under until it is restarted. (Used in fallback mode if the script can't get proper permissions)
+
 4) Run Main.py through cmd using python Main.py
 
 *To Disable / Enable Features check Config.json*
