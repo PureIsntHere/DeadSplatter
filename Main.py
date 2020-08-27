@@ -156,7 +156,6 @@ def steaminstall(auto_update):
         print('Installed Dead Matter Dedicated Server.')
     except Exception as ex:
         print(f'Error: {str(ex)}')
-        Updated = True
     menu()
 
 
