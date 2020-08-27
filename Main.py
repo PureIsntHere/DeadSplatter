@@ -91,7 +91,7 @@ def check_restart():
 def process_exists(process_name):
     call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
     # use buildin check_output right away
-    output = subprocess.check_output(call).decode()
+    output = subprocess.check_output(call).decode(encoding="utf8", errors='ignore')
     # check in last line for process name
     last_line = output.strip().split('\r\n')[-1]
     # because Fail message could be translated
@@ -100,22 +100,24 @@ def process_exists(process_name):
 
 def Auto_Restart():
     while 1:
-        # Opens Server
-        if mem_per < Max_Ram and process_exists('deadmatterServer.exe') is False and PID != 'XXXX':
-            logging('Server not found. Starting Server.')
-            subprocess.Popen([Server_Path, "-log"])
-        # Normal Logging
-        elif process_exists('deadmatterServer.exe') is True and PID != 'XXXX':
-            logging(
-                f'Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Ram Cutoff:{Max_Ram}%')
-        # Fallback logging
-        elif process_exists('deadmatterServer.exe') is True and PID == 'XXXX':
-            logging(
-                f'USING FALLBACK|Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | System Ram Cutoff:{Max_System_Ram}%')
-        checkram()
-        check_restart()
-        sleep(Server_Check_Timer)
-
+        try:
+            # Opens Server
+            if mem_per < Max_Ram and process_exists('deadmatterServer.exe') is False and PID != 'XXXX':
+                logging('Server not found. Starting Server.')
+                subprocess.Popen([Server_Path, "-log"])
+            # Normal Logging
+            elif process_exists('deadmatterServer.exe') is True and PID != 'XXXX':
+                logging(
+                    f'Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Ram Cutoff:{Max_Ram}%')
+            # Fallback logging
+            elif process_exists('deadmatterServer.exe') is True and PID == 'XXXX':
+                logging(
+                    f'USING FALLBACK|Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | System Ram Cutoff:{Max_System_Ram}%')
+            checkram()
+            check_restart()
+            sleep(Server_Check_Timer)
+        except:
+            pass
 
 def Ram_Cleaner():
     while 1:
@@ -125,7 +127,6 @@ def Ram_Cleaner():
             sleep(Ram_Refresh_Timer)
         except:
             logging('Error Cleaning Ram')
-
 
 def steaminstall(auto_update):
     try:
@@ -161,7 +162,6 @@ def steaminstall(auto_update):
     except Exception as ex:
         print(f'Error: {str(ex)}')
     menu()
-
 
 def existingsteam(steampath):
     try:
@@ -207,7 +207,7 @@ def menu():
         print('Monitoring Started.')
     elif choice == '2':
         steaminput = input(
-            'SteamCMD Menu\n1)local Steamcmd Install(Will Install new if no steamcmd is installed)\n2)Existing SteamCMD Install (Must be set in config.json)\nPlease choose')
+            'SteamCMD Menu\n1)local Steamcmd Install(Will Install new if no steamcmd is installed)\n2)Existing SteamCMD Install (Must be set in config.json)\nPlease choose:')
         if steaminput == '1':
             steaminstall(False)
         elif steaminput == '2':
