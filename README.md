@@ -25,6 +25,8 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 
 3) Monitors server memory use and system memory use
 
+4) Updater for server using SteamCMD
+
 **How To Use**
 
 1) Download Source
@@ -38,10 +40,10 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 
 **To Do List**
 
-1)Integrate SteamCMD
+1)I̶n̶t̶e̶g̶r̶a̶t̶e̶ ̶S̶t̶e̶a̶m̶C̶M̶D̶
 
-2)Integrate Updating Servers
+2)I̶n̶t̶e̶g̶r̶a̶t̶e̶ ̶U̶p̶d̶a̶t̶i̶n̶g̶ ̶S̶e̶r̶v̶e̶r̶s̶
 
-3)Integrate Installing Servers
+3)I̶n̶t̶e̶g̶r̶a̶t̶e̶ ̶I̶n̶s̶t̶a̶l̶l̶i̶n̶g̶ ̶S̶e̶r̶v̶e̶r̶s̶
 
 4)Maintain Performance
