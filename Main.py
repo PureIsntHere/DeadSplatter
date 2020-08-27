@@ -22,6 +22,7 @@ RamRefresh = config['RamRefresh']
 AutoUpdate = config['AutoUpdate']
 Ram_Refresh_Timer = config['Ram_Clean_Timer']
 Server_Check_Timer = config['Server_Check_Timer']
+Skip_Menu = config['Skip_Window_To_Monitor']
 
 # Global Vars
 PID = 0
@@ -190,8 +191,12 @@ def existingsteam(steampath):
 
 def menu():
     clear()
-    choice = input(
-        'DeadSplatter Menu\n1)Run Monitor\n2)Update / Install Server\nPlease Choose:')
+    if Skip_Menu is True:
+        threading.Thread(target=Auto_Restart).start()
+        checkram()
+        threading.Thread(target=Ram_Cleaner).start()
+        return
+    choice = input('DeadSplatter Menu\n1)Run Monitor\n2)Update / Install Server\nPlease Choose:')
     if choice == '1':
         threading.Thread(target=Auto_Restart).start()
         checkram()
