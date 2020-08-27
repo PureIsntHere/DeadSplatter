@@ -44,7 +44,7 @@ def logging(content):
 
 
 def checkram():
-    global PID, NAME, mem_per,PID_Fallback
+    global PID, NAME, mem_per, PID_Fallback
     try:
         # Attempt at detecting application memory usage
         for process in psutil.process_iter():
@@ -62,8 +62,9 @@ def checkram():
         mem_per = 0
         PID_Fallback = 'XXXX'
         NAME = 'Connection Error'
-        
+
 # Checks Current Ram usage to Preset Cap
+
 
 def check_restart():
     global mem_per
@@ -91,7 +92,8 @@ def check_restart():
 def process_exists(process_name):
     call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
     # use buildin check_output right away
-    output = subprocess.check_output(call).decode(encoding="utf8", errors='ignore')
+    output = subprocess.check_output(call).decode(
+        encoding="utf8", errors='ignore')
     # check in last line for process name
     last_line = output.strip().split('\r\n')[-1]
     # because Fail message could be translated
@@ -119,6 +121,7 @@ def Auto_Restart():
         except:
             pass
 
+
 def Ram_Cleaner():
     while 1:
         try:
@@ -127,6 +130,7 @@ def Ram_Cleaner():
             sleep(Ram_Refresh_Timer)
         except:
             logging('Error Cleaning Ram')
+
 
 def steaminstall(auto_update):
     try:
@@ -162,6 +166,7 @@ def steaminstall(auto_update):
     except Exception as ex:
         print(f'Error: {str(ex)}')
     menu()
+
 
 def existingsteam(steampath):
     try:
