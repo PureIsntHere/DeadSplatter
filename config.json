@@ -10,7 +10,7 @@
 
 "Steam_CMD_Path":"",
 
-"Ram_Clean_Timer":60,
+"Ram_Clean_Timer":600,
 
 "Server_Check_Timer":10,
 
