@@ -1,0 +1,2 @@
+py_steamcmd_wrapper==0.0.2
+psutil==5.7.2
