@@ -1,22 +1,31 @@
-import json,os,psutil,datetime,subprocess,signal,threading
+import json,os,psutil,datetime,subprocess,signal,threading,shutil
+from pysteamcmdwrapper import SteamCMD, SteamCMDException
+clear = lambda: os.system('cls')
 from time import sleep
 
+# This Loads the Config.json
 f = open("config.json",'r+')
 config = json.load(f)
 Max_Ram = config['max_ram']
 Server_Path = config['Path_To_Server']
 Max_System_Ram = config['max_system_ram']
+Server_Folder = Server_Path.strip('deadmatterServer.exe')
+SteamCMDInstall = config['Steam_CMD_Path']
+RamRefresh = config['RamRefresh']
 
+#Global Vars 
 PID = 0
 NAME = ""
 mem_per = 0
 
+#Logging Function
 def logging(content):
     logfile = open('server_perf_log.txt','a')
     logfile.write(str(datetime.datetime.now())+'|'+ content + '\n')
     print(str(datetime.datetime.now())+'|'+ content)
     logfile.close()
 
+#Checks the ram. Has a Failsafe implemented
 def checkram():
     global PID , NAME , mem_per
     try:
@@ -37,6 +46,7 @@ def checkram():
         PID = 'XXXX'
         NAME = 'Connection Error'
 
+#Checks Current Ram usage to Preset Cap
 def check_restart():
     global mem_per
     try:
@@ -55,6 +65,7 @@ def check_restart():
     except:
         pass
 
+#Checks if Server is open
 def process_exists(process_name):
     call = 'TASKLIST', '/FI', 'imagename eq %s' % process_name
     # use buildin check_output right away
@@ -89,11 +100,80 @@ def Ram_Cleaner():
         except:
             logging('Error Cleaning Ram')
 
-if __name__ == "__main__":
+def steaminstall():
     try:
+        try:
+            os.mkdir('steam')
+        except:
+            pass
+        steam = SteamCMD("steam")
+        steam.install()
+    except SteamCMDException:
+        pass
+    try:
+        dirpath = input('Enter Path to Server Directory (Leave blank for config.json):')
+        if dirpath == '':
+            dirpath = Server_Folder
+        steam.login()
+        try:
+            os.mkdir(dirpath + '/BACKUP_FILES')
+        except:
+            pass
+        print('BACKING UP FILES')
+        for filename in os.listdir(dirpath + '/deadmatter/Saved'):
+            original = dirpath + '/deadmatter/Saved/' +filename
+            copy = dirpath + '/BACKUP_FILES/' + filename
+            shutil.copyfile(original, copy)
+        print('Backed up config files into BACKUP_FILES folder.')
+        steam.app_update(1110990,dirpath,validate=True)
+        print('Installed Dead Matter Dedicated Server.')
+    except:
+        print('Error Logging in.')
+    menu()
+
+def existingsteam(steampath):
+    try:
+        steam = SteamCMD(steampath)
+        steam.login()
+        dirpath = input('Enter Path to Server Directory (Leave blank for config.json):')
+        if dirpath == '':
+            dirpath = Server_Folder
+        try:
+            os.mkdir(dirpath + '/BACKUP_FILES')
+        except:
+            pass
+        for filename in os.listdir(dirpath + '/deadmatter/Saved'):
+            original = dirpath + '/deadmatter/Saved/' +filename
+            print(original)
+            copy = dirpath + '/BACKUP_FILES/' + filename
+            print(copy)
+            shutil.copyfile(original, copy)
+        steam.app_update(1110990,dirpath,validate=True)
+        print('Installed Dead Matter Dedicated Server.')
+    except:
+        print('Error Logging in.')
+    menu()
+
+#Menu Function
+def menu():
+    clear()
+    choice = input('DeadSplatter Menu\n1)Run Monitor\n2)Update / Install Server\nPlease Choose:')
+    if choice == '1':
         threading.Thread(target=Auto_Restart).start()
         checkram()
-        threading.Thread(target=Ram_Cleaner).start()
+        if RamRefresh:
+            threading.Thread(target=Ram_Cleaner).start()
         print('Monitoring Started.')
+    elif choice == '2':
+        steaminput = input('SteamCMD Menu\n1)local Steamcmd Install(Will Install new if no steamcmd is installed)\n2)Existing SteamCMD Install (Must be set in config.json)\nPlease choose')
+        if steaminput == '1':
+            steaminstall()
+        elif steaminput == '2':
+            steamdir = SteamCMDInstall
+            existingsteam(steamdir)
+
+if __name__ == "__main__":
+    try:
+        menu()
     except Exception as ex:
         print(f'Failure during startup. Please try again EX:{str(ex)}')
