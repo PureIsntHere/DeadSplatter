@@ -12,6 +12,7 @@ Max_System_Ram = config['max_system_ram']
 Server_Folder = Server_Path.strip('deadmatterServer.exe')
 SteamCMDInstall = config['Steam_CMD_Path']
 RamRefresh = config['RamRefresh']
+AutoUpdate = config['AutoUpdate']
 
 #Global Vars 
 PID = 0
@@ -100,7 +101,7 @@ def Ram_Cleaner():
         except:
             logging('Error Cleaning Ram')
 
-def steaminstall():
+def steaminstall(auto_update):
     try:
         try:
             os.mkdir('steam')
@@ -111,8 +112,11 @@ def steaminstall():
     except SteamCMDException:
         pass
     try:
-        dirpath = input('Enter Path to Server Directory (Leave blank for config.json):')
-        if dirpath == '':
+        if auto_update == False:
+            dirpath = input('Enter Path to Server Directory (Leave blank for config.json):')
+            if dirpath == '':
+                dirpath = Server_Folder
+        elif auto_update == True:
             dirpath = Server_Folder
         steam.login()
         try:
@@ -120,15 +124,16 @@ def steaminstall():
         except:
             pass
         print('BACKING UP FILES')
-        for filename in os.listdir(dirpath + '/deadmatter/Saved'):
-            original = dirpath + '/deadmatter/Saved/' +filename
+        for filename in os.listdir(dirpath + 'deadmatter/Saved/Config/WindowsServer'):
+            original = dirpath + 'deadmatter/Saved/Config/WindowsServer/' +filename
             copy = dirpath + '/BACKUP_FILES/' + filename
             shutil.copyfile(original, copy)
         print('Backed up config files into BACKUP_FILES folder.')
         steam.app_update(1110990,dirpath,validate=True)
         print('Installed Dead Matter Dedicated Server.')
-    except:
-        print('Error Logging in.')
+    except Exception as ex:
+        print(f'Error: {str(ex)}')
+        Updated = True
     menu()
 
 def existingsteam(steampath):
@@ -142,8 +147,8 @@ def existingsteam(steampath):
             os.mkdir(dirpath + '/BACKUP_FILES')
         except:
             pass
-        for filename in os.listdir(dirpath + '/deadmatter/Saved'):
-            original = dirpath + '/deadmatter/Saved/' +filename
+        for filename in os.listdir(dirpath + 'deadmatter/Saved/Config/WindowsServer'):
+            original = dirpath + 'deadmatter/Saved/Config/WindowsServer/' +filename
             print(original)
             copy = dirpath + '/BACKUP_FILES/' + filename
             print(copy)
@@ -165,7 +170,7 @@ def menu():
             threading.Thread(target=Ram_Cleaner).start()
         print('Monitoring Started.')
     elif choice == '2':
-        steaminput = input('SteamCMD Menu\n1)local Steamcmd Install(Will Install new if no steamcmd is installed)\n2)Existing SteamCMD Install (Must be set in config.json)\nPlease choose:')
+        steaminput = input('SteamCMD Menu\n1)local Steamcmd Install(Will Install new if no steamcmd is installed)\n2)Existing SteamCMD Install (Must be set in config.json)\nPlease choose')
         if steaminput == '1':
             steaminstall()
         elif steaminput == '2':
@@ -174,6 +179,10 @@ def menu():
 
 if __name__ == "__main__":
     try:
+        if AutoUpdate == True:
+            auto_prompt = input('Auto Updated Enabled in config.json\nWould you like to try to update? y/n\nchoice:')
+            if auto_prompt == 'y' or 'Y':
+                steaminstall(True)
         menu()
     except Exception as ex:
         print(f'Failure during startup. Please try again EX:{str(ex)}')
