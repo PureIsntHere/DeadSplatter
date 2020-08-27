@@ -196,7 +196,8 @@ def menu():
         checkram()
         threading.Thread(target=Ram_Cleaner).start()
         return
-    choice = input('DeadSplatter Menu\n1)Run Monitor\n2)Update / Install Server\nPlease Choose:')
+    choice = input(
+        'DeadSplatter Menu\n1)Run Monitor\n2)Update / Install Server\nPlease Choose:')
     if choice == '1':
         threading.Thread(target=Auto_Restart).start()
         checkram()
