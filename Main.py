@@ -165,7 +165,7 @@ def menu():
             threading.Thread(target=Ram_Cleaner).start()
         print('Monitoring Started.')
     elif choice == '2':
-        steaminput = input('SteamCMD Menu\n1)local Steamcmd Install(Will Install new if no steamcmd is installed)\n2)Existing SteamCMD Install (Must be set in config.json)\nPlease choose')
+        steaminput = input('SteamCMD Menu\n1)local Steamcmd Install(Will Install new if no steamcmd is installed)\n2)Existing SteamCMD Install (Must be set in config.json)\nPlease choose:')
         if steaminput == '1':
             steaminstall()
         elif steaminput == '2':
