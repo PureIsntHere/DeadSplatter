@@ -1,4 +1,4 @@
-{"max_ram":30,
+{"max_ram":40,
 
 "auto_restart":true,
 
@@ -9,5 +9,9 @@
 "Path_To_Server":"E:/SteamLibrary/steamapps/common/Dead Matter Dedicated Server/deadmatterServer.exe",
 
 "Steam_CMD_Path":"",
+
+"Ram_Clean_Timer":60,
+
+"Server_Check_Timer":10,
 
 "AutoUpdate":false}
