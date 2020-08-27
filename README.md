@@ -60,3 +60,4 @@ Example2: "max_system_ram":50 <- Max amount of ram load the entire system can be
 **Known Issues**
 1) Certain Windows Server Builds have weird permissions that cause the script to run in failsafe mode 24/7
 Possible fix for some users is to run through elevated Powershell.
+If Powershell workaround doesn't work you'll have to use fallback mode. There's not much i can do about Windows servers weird ass permissions 
