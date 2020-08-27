@@ -27,6 +27,7 @@ Skip_Menu = config['Skip_Window_To_Monitor']
 
 # Global Vars
 PID = 0
+PID_Fallback = ''
 NAME = ""
 mem_per = 0
 
@@ -47,36 +48,35 @@ def checkram():
     try:
         # Attempt at detecting application memory usage
         for process in psutil.process_iter():
-            if 'deadmatterServer-Win64-Test' in str(process):
+            if 'deadmatterServer-Win64-Test.exe' in str(process):
                 PID = process.pid
                 NAME = process.name()
                 mem_per = round(psutil.Process(PID).memory_percent(), 2)
-                if mem_per == 0:
-                    PID = 'XXXX'
-                    NAME = 'Connection Error'
-                    mem_per = psutil.virtual_memory().percent
                 break
+        if mem_per == 0:
+            PID_Fallback = 'XXXX'
+            NAME = 'Connection Error'
+            mem_per = psutil.virtual_memory().percent
     except Exception as ex:
         print(str(ex))
         mem_per = 0
-        PID = 'XXXX'
+        PID_Fallback = 'XXXX'
         NAME = 'Connection Error'
-
+        
 # Checks Current Ram usage to Preset Cap
-
 
 def check_restart():
     global mem_per
     try:
         # Nomral Restart
-        if PID != 'XXXX':
+        if PID_Fallback != 'XXXX':
             if mem_per > Max_Ram:
                 logging(
                     f'Max Ram Met. Current Ram:{mem_per}% Server Restarting.')
                 mem_per = 0
                 os.system("TASKKILL /F /IM deadmatterServer-Win64-Test.exe")
         # Fallback Restart
-        else:
+        elif PID_Fallback == 'XXXX':
             if mem_per > Max_System_Ram:
                 logging(
                     f'Max System Ram Met. Current Ram:{mem_per}% Server Restarting.')
