@@ -201,7 +201,7 @@ def menu():
         steaminput = input(
             'SteamCMD Menu\n1)local Steamcmd Install(Will Install new if no steamcmd is installed)\n2)Existing SteamCMD Install (Must be set in config.json)\nPlease choose')
         if steaminput == '1':
-            steaminstall()
+            steaminstall(False)
         elif steaminput == '2':
             steamdir = SteamCMDInstall
             existingsteam(steamdir)
