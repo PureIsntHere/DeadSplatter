@@ -79,14 +79,14 @@ def process_exists(process_name):
 def Auto_Restart():
     while 1:
         #Opens Server
-        if mem_per < Max_Ram and process_exists('deadmatterServer.exe') == False and PID != 'XXXX':
+        if mem_per < Max_Ram and process_exists('deadmatterServer.exe') is False and PID != 'XXXX':
             logging('Server not found. Starting Server.')
             subprocess.Popen([Server_Path, "-log"])
         #Normal Logging
-        elif process_exists('deadmatterServer.exe') == True and PID != 'XXXX':
+        elif process_exists('deadmatterServer.exe') is True and PID != 'XXXX':
             logging(f'Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Ram Cutoff:{Max_Ram}%')
         #Fallback logging
-        elif process_exists('deadmatterServer.exe') == True and PID == 'XXXX':
+        elif process_exists('deadmatterServer.exe') is True and PID == 'XXXX':
             logging(f'USING FALLBACK|Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | System Ram Cutoff:{Max_System_Ram}%')
         checkram()
         check_restart()
@@ -112,11 +112,11 @@ def steaminstall(auto_update):
     except SteamCMDException:
         pass
     try:
-        if auto_update == False:
+        if auto_update is False:
             dirpath = input('Enter Path to Server Directory (Leave blank for config.json):')
             if dirpath == '':
                 dirpath = Server_Folder
-        elif auto_update == True:
+        elif auto_update is True:
             dirpath = Server_Folder
         steam.login()
         try:
@@ -179,7 +179,7 @@ def menu():
 
 if __name__ == "__main__":
     try:
-        if AutoUpdate == True:
+        if AutoUpdate is True:
             auto_prompt = input('Auto Updated Enabled in config.json\nWould you like to try to update? y/n\nchoice:')
             if auto_prompt == 'y' or 'Y':
                 steaminstall(True)
