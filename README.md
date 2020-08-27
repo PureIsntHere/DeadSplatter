@@ -52,3 +52,6 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 3)I̶n̶t̶e̶g̶r̶a̶t̶e̶ ̶I̶n̶s̶t̶a̶l̶l̶i̶n̶g̶ ̶S̶e̶r̶v̶e̶r̶s̶
 
 4)Maintain Performance
+
+**Known Issues**
+1) Certain Windows Server Builds have weird permissions that cause the script to run in failsafe mode 24/7
