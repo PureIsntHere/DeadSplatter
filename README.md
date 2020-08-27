@@ -41,6 +41,7 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 
 4) Run Main.py through cmd using python Main.py
 
+*To Disable / Enable Features check Config.json*
 
 **To Do List**
 
