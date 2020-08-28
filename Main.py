@@ -62,6 +62,8 @@ def checkram():
             PID_Fallback = 'XXXX'
             NAME = 'Connection Error'
             mem_per = psutil.virtual_memory().percent
+        else:
+            PID_Fallback = ''
     except Exception as ex:
         print(str(ex))
         mem_per = 0
