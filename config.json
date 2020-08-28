@@ -16,4 +16,8 @@
 
 "Skip_Window_To_Monitor":false,
 
+"Auto_Backups":true,
+
+"Auto_Backup_Time":300,
+
 "AutoUpdate":false}
