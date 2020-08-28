@@ -20,4 +20,8 @@
 
 "Auto_Backup_Time":300,
 
+"SteamUsername":"",
+
+"SteamPassword":"",
+
 "AutoUpdate":false}
