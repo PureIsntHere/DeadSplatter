@@ -35,6 +35,8 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 
 7) Support for automatic logging in with SteamCMD. If a username and password are supplied in config the script will automatically login
 
+8) Simple functionality. DeadSplatter can install, update, and manage buttons with a single command.  
+
 **How To Use**
 
 1) Download Source
