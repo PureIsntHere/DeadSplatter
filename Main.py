@@ -24,6 +24,9 @@ AutoUpdate = config['AutoUpdate']
 Ram_Refresh_Timer = config['Ram_Clean_Timer']
 Server_Check_Timer = config['Server_Check_Timer']
 Skip_Menu = config['Skip_Window_To_Monitor']
+Auto_Backup =config['Auto_Backups']
+Auto_Backup_Timer = ['Auto_Backup_Time']
+
 
 # Global Vars
 PID = 0
@@ -192,6 +195,26 @@ def existingsteam(steampath):
         print('Error Logging in.')
     menu()
 
+#Automatic Backup
+def Auto_Backup():
+    try:
+        while 1:
+            now = datetime.datetime.now()
+            current_time = str(now.year) + '_' + str(now.month) + '_' + str(now.day) + '_' + str(now.hour) + '_' + str(now.minute)
+            dirpath = Server_Folder
+            try:
+                os.mkdir(dirpath + '/Save_Backups')
+            except:
+                pass
+            for filename in os.listdir(dirpath + 'deadmatter/Saved/sqlite3'):
+                original = dirpath + 'deadmatter/Saved/sqlite3/' + filename
+                copy = dirpath + '/Save_Backups/' + filename + f'_{current_time}_BACKUP'
+                shutil.copyfile(original, copy)
+                logging('Saved ServerDB Backup')
+            sleep(Auto_Backup_Timer)
+    except:
+        pass
+
 # Menu Function
 
 
@@ -201,6 +224,8 @@ def menu():
         threading.Thread(target=Auto_Restart).start()
         checkram()
         threading.Thread(target=Ram_Cleaner).start()
+        if Auto_Backup:
+            threading.Thread(target=Auto_Backup).start()
         return
     choice = input(
         'DeadSplatter Menu\n1)Run Monitor\n2)Update / Install Server\nPlease Choose:')
@@ -209,6 +234,8 @@ def menu():
         checkram()
         if RamRefresh:
             threading.Thread(target=Ram_Cleaner).start()
+        if Auto_Backup:
+            threading.Thread(target=Auto_Backup).start()
         print('Monitoring Started.')
     elif choice == '2':
         steaminput = input(
