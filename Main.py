@@ -183,7 +183,10 @@ def steaminstall(auto_update):
 def existingsteam(steampath):
     try:
         steam = SteamCMD(steampath)
-        steam.login()
+        if SteamUser!= "" and SteamPass !="":
+            steam.login(SteamUser,SteamPass)
+        else:
+            steam.login()
         dirpath = input(
             'Enter Path to Server Directory (Leave blank for config.json):')
         if dirpath == '':
