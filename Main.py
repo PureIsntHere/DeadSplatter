@@ -80,7 +80,7 @@ def checkram():
 
 
 def check_restart():
-    global mem_per, system_per
+    global mem_per, system_per, PID_Fallback
     try:
         # Nomral Restart
         if mem_per > Max_Ram:
