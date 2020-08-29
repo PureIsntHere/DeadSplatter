@@ -59,18 +59,19 @@ def checkram():
                 PID = process.pid
                 NAME = process.name()
                 mem_per = round(psutil.Process(PID).memory_percent(), 2)
+                system_per = round(psutil.virtual_memory().percent,2)
                 PID_Fallback = ''
                 break
         if mem_per == 0 or PID_Fallback == 'XXXX':
             PID_Fallback = 'XXXX'
             NAME = 'Connection Error'
-            system_per = psutil.virtual_memory().percent
+            system_per = round(psutil.virtual_memory().percent,2)
     except Exception as ex:
         print(str(ex))
         mem_per = 0
         PID_Fallback = 'XXXX'
         NAME = 'Connection Error'
-        system_per = psutil.virtual_memory().percent
+        system_per = round(psutil.virtual_memory().percent,2)
 
 # Checks Current Ram usage to Preset Cap
 
