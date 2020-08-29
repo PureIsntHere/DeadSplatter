@@ -51,7 +51,7 @@ def logging(content):
 
 
 def checkram():
-    global PID, NAME, mem_per, PID_Fallback,system_per
+    global PID, NAME, mem_per, PID_Fallback, system_per
     try:
         # Attempt at detecting application memory usage
         for process in psutil.process_iter():
@@ -76,7 +76,7 @@ def checkram():
 
 
 def check_restart():
-    global mem_per,system_per
+    global mem_per, system_per
     try:
         # Nomral Restart
         if PID_Fallback != 'XXXX':
