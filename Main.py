@@ -57,6 +57,7 @@ def checkram():
                 PID = process.pid
                 NAME = process.name()
                 mem_per = round(psutil.Process(PID).memory_percent(), 2)
+                PID_Fallback = ''
                 break
         if mem_per == 0 or PID_Fallback == 'XXXX':
             PID_Fallback = 'XXXX'
