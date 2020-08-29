@@ -80,19 +80,16 @@ def check_restart():
     global mem_per,system_per
     try:
         # Nomral Restart
-        if PID_Fallback != 'XXXX':
-            if mem_per > Max_Ram or system_per > Max_System_Ram:
-                logging(
-                    f'Max Ram Met. Current Ram:{mem_per}% Server Restarting.')
-                mem_per = 0
-                system_per = 0
-                os.system("TASKKILL /F /IM deadmatterServer-Win64-Shipping.exe")
-            elif system_per > Max_System_Ram:
-                logging(
-                    f'Max System Ram Met. Current System Ram:{system_per}% Server Restarting.')
-                mem_per = 0
-                system_per = 0
-                os.system("TASKKILL /F /IM deadmatterServer-Win64-Shipping.exe")
+        if mem_per > Max_Ram:
+            logging(f'Max Ram Met. Current Ram:{mem_per}% Server Restarting.')
+            mem_per = 0
+            system_per = 0
+            os.system("TASKKILL /F /IM deadmatterServer-Win64-Shipping.exe")
+        elif system_per > Max_System_Ram:
+            logging(f'Max System Ram Met. Current System Ram:{system_per}% Server Restarting.')
+            mem_per = 0
+            system_per = 0
+            os.system("TASKKILL /F /IM deadmatterServer-Win64-Shipping.exe")
 
     except:
         pass
@@ -121,11 +118,11 @@ def Auto_Restart():
             # Normal Logging
             elif process_exists('deadmatterServer.exe') is True and PID_Fallback != 'XXXX':
                 logging(
-                    f'Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Ram Cutoff:{Max_Ram}% | System Ram Usage:{system_per}% | System Ram Cutoff:{Max_System_Ram}%')
+                    f'Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Server Ram Cutoff:{Max_Ram}% | System Ram Usage:{system_per}% | System Ram Cutoff:{Max_System_Ram}%')
             # Fallback logging
             elif process_exists('deadmatterServer.exe') is True and PID_Fallback == 'XXXX':
                 logging(
-                    f'Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Ram Cutoff:{Max_Ram}% | System Ram Usage:{system_per}% | System Ram Cutoff:{Max_System_Ram}%')
+                    f'Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Server Ram Cutoff:{Max_Ram}% | System Ram Usage:{system_per}% | System Ram Cutoff:{Max_System_Ram}%')
             checkram()
             check_restart()
             sleep(Server_Check_Timer)
