@@ -60,7 +60,7 @@ def checkram():
                 NAME = process.name()
                 mem_per = round(psutil.Process(PID).memory_percent(), 2)
                 break
-        if mem_per == 0:
+        if mem_per == 0 or PID_Fallback = 'XXXX':
             PID_Fallback = 'XXXX'
             NAME = 'Connection Error'
             mem_per = psutil.virtual_memory().percent
