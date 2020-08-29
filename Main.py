@@ -53,6 +53,9 @@ def logging(content):
 def checkram():
     global PID, NAME, mem_per, PID_Fallback,system_per
     try:
+        mem_per = 0
+        system_per = 0
+        PID_Fallback = ''
         # Attempt at detecting application memory usage
         for process in psutil.process_iter():
             if 'deadmatterServer-Win64-Shipping.exe' in str(process):
@@ -84,11 +87,13 @@ def check_restart():
             logging(f'Max Ram Met. Current Ram:{mem_per}% Server Restarting.')
             mem_per = 0
             system_per = 0
+            PID_Fallback = ''
             os.system("TASKKILL /F /IM deadmatterServer-Win64-Shipping.exe")
         elif system_per > Max_System_Ram:
             logging(f'Max System Ram Met. Current System Ram:{system_per}% Server Restarting.')
             mem_per = 0
             system_per = 0
+            PID_Fallback = ''
             os.system("TASKKILL /F /IM deadmatterServer-Win64-Shipping.exe")
 
     except:
