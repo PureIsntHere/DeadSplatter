@@ -51,7 +51,7 @@ def logging(content):
 
 
 def checkram():
-    global PID, NAME, mem_per, PID_Fallback,system_per
+    global PID, NAME, mem_per, PID_Fallback, system_per
     try:
         mem_per = 0
         system_per = 0
@@ -62,25 +62,25 @@ def checkram():
                 PID = process.pid
                 NAME = process.name()
                 mem_per = round(psutil.Process(PID).memory_percent(), 2)
-                system_per = round(psutil.virtual_memory().percent,2)
+                system_per = round(psutil.virtual_memory().percent, 2)
                 PID_Fallback = ''
                 break
         if mem_per == 0 or PID_Fallback == 'XXXX':
             PID_Fallback = 'XXXX'
             NAME = 'Connection Error'
-            system_per = round(psutil.virtual_memory().percent,2)
+            system_per = round(psutil.virtual_memory().percent, 2)
     except Exception as ex:
         print(str(ex))
         mem_per = 0
         PID_Fallback = 'XXXX'
         NAME = 'Connection Error'
-        system_per = round(psutil.virtual_memory().percent,2)
+        system_per = round(psutil.virtual_memory().percent, 2)
 
 # Checks Current Ram usage to Preset Cap
 
 
 def check_restart():
-    global mem_per,system_per
+    global mem_per, system_per
     try:
         # Nomral Restart
         if mem_per > Max_Ram:
@@ -90,7 +90,8 @@ def check_restart():
             PID_Fallback = ''
             os.system("TASKKILL /F /IM deadmatterServer-Win64-Shipping.exe")
         elif system_per > Max_System_Ram:
-            logging(f'Max System Ram Met. Current System Ram:{system_per}% Server Restarting.')
+            logging(
+                f'Max System Ram Met. Current System Ram:{system_per}% Server Restarting.')
             mem_per = 0
             system_per = 0
             PID_Fallback = ''
