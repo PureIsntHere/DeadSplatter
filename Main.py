@@ -24,12 +24,10 @@ AutoUpdate = config['AutoUpdate']
 Ram_Refresh_Timer = config['Ram_Clean_Timer']
 Server_Check_Timer = config['Server_Check_Timer']
 Skip_Menu = config['Skip_Window_To_Monitor']
-Auto_Backup =config['Auto_Backups']
+Auto_Backup = config['Auto_Backups']
 Auto_Backup_Timer = config['Auto_Backup_Time']
 SteamUser = config['SteamUsername']
 SteamPass = config['SteamPassword']
-
-
 
 
 # Global Vars
@@ -158,9 +156,9 @@ def steaminstall(auto_update):
         elif auto_update is True:
             dirpath = Server_Folder
 
-        #Checks for login credentials
-        if SteamUser!= "" and SteamPass !="":
-            steam.login(SteamUser,SteamPass)
+        # Checks for login credentials
+        if SteamUser != "" and SteamPass != "":
+            steam.login(SteamUser, SteamPass)
         else:
             steam.login()
         try:
@@ -183,8 +181,8 @@ def steaminstall(auto_update):
 def existingsteam(steampath):
     try:
         steam = SteamCMD(steampath)
-        if SteamUser!= "" and SteamPass !="":
-            steam.login(SteamUser,SteamPass)
+        if SteamUser != "" and SteamPass != "":
+            steam.login(SteamUser, SteamPass)
         else:
             steam.login()
         dirpath = input(
@@ -207,12 +205,15 @@ def existingsteam(steampath):
         print('Error Logging in.')
     menu()
 
-#Automatic Backup
+# Automatic Backup
+
+
 def Auto_Backup():
     try:
         while 1:
             now = datetime.datetime.now()
-            current_time = str(now.year) + '_' + str(now.month) + '_' + str(now.day) + '_' + str(now.hour) + '_' + str(now.minute)
+            current_time = str(now.year) + '_' + str(now.month) + '_' + \
+                str(now.day) + '_' + str(now.hour) + '_' + str(now.minute)
             dirpath = Server_Folder
             try:
                 os.mkdir(dirpath + '/Save_Backups')
@@ -220,7 +221,8 @@ def Auto_Backup():
                 pass
             for filename in os.listdir(dirpath + 'deadmatter/Saved/sqlite3'):
                 original = dirpath + 'deadmatter/Saved/sqlite3/' + filename
-                copy = dirpath + '/Save_Backups/' + filename + f'_{current_time}_BACKUP'
+                copy = dirpath + '/Save_Backups/' + \
+                    filename + f'_{current_time}_BACKUP'
                 shutil.copyfile(original, copy)
                 logging('Saved ServerDB Backup')
             sleep(Auto_Backup_Timer)
