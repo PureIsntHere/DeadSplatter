@@ -35,6 +35,8 @@ PID = 0
 PID_Fallback = ''
 NAME = ""
 mem_per = 0
+system_per = 0
+
 
 # Logging Function
 
@@ -49,7 +51,7 @@ def logging(content):
 
 
 def checkram():
-    global PID, NAME, mem_per, PID_Fallback
+    global PID, NAME, mem_per, PID_Fallback,system_per
     try:
         # Attempt at detecting application memory usage
         for process in psutil.process_iter():
@@ -62,18 +64,19 @@ def checkram():
         if mem_per == 0 or PID_Fallback == 'XXXX':
             PID_Fallback = 'XXXX'
             NAME = 'Connection Error'
-            mem_per = psutil.virtual_memory().percent
+            system_per = psutil.virtual_memory().percent
     except Exception as ex:
         print(str(ex))
         mem_per = 0
         PID_Fallback = 'XXXX'
         NAME = 'Connection Error'
+        system_per = psutil.virtual_memory().percent
 
 # Checks Current Ram usage to Preset Cap
 
 
 def check_restart():
-    global mem_per
+    global mem_per,system_per
     try:
         # Nomral Restart
         if PID_Fallback != 'XXXX':
@@ -86,8 +89,9 @@ def check_restart():
         elif PID_Fallback == 'XXXX':
             if mem_per > Max_System_Ram:
                 logging(
-                    f'Max System Ram Met. Current Ram:{mem_per}% Server Restarting.')
+                    f'Max System Ram Met. Current Ram:{system_per}% Server Restarting.')
                 mem_per = 0
+                system_per = 0
                 os.system("TASKKILL /F /IM deadmatterServer-Win64-Shipping.exe")
     except:
         pass
@@ -110,7 +114,7 @@ def Auto_Restart():
     while 1:
         try:
             # Opens Server
-            if mem_per < Max_Ram and process_exists('deadmatterServer.exe') is False:
+            if mem_per < Max_Ram and process_exists('deadmatterServer.exe') is False and system_per < Max_System_Ram:
                 logging('Server not found. Starting Server.')
                 subprocess.Popen([Server_Path, "-log"])
             # Normal Logging
@@ -120,7 +124,7 @@ def Auto_Restart():
             # Fallback logging
             elif process_exists('deadmatterServer.exe') is True and PID_Fallback == 'XXXX':
                 logging(
-                    f'USING FALLBACK|Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | System Ram Cutoff:{Max_System_Ram}%')
+                    f'USING FALLBACK|Monitoring:{NAME} | PID:{PID_Fallback} | Current Ram Usage:{system_per}% | System Ram Cutoff:{Max_System_Ram}%')
             checkram()
             check_restart()
             sleep(Server_Check_Timer)
