@@ -128,7 +128,7 @@ def Auto_Restart():
             # Fallback logging
             elif process_exists('deadmatterServer.exe') is True and PID_Fallback == 'XXXX':
                 logging(
-                    f'Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Server Ram Cutoff:{Max_Ram}% | System Ram Usage:{system_per}% | System Ram Cutoff:{Max_System_Ram}%')
+                    f'USING FALLBACK| Monitoring:{NAME} | PID:{PID} | Current Ram Usage:{mem_per}% | Server Ram Cutoff:{Max_Ram}% | System Ram Usage:{system_per}% | System Ram Cutoff:{Max_System_Ram}%')
             checkram()
             check_restart()
             sleep(Server_Check_Timer)
