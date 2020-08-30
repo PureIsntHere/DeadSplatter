@@ -23,7 +23,7 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 
 1) Fully customizable server path and ram cutoffs.
 
-2) LightWeight and performance friendly
+2) LightWeight and performance friendly (lightest weight manager that monitors memory usage)
 
 3) Monitors server memory use and system memory use
 
