@@ -41,7 +41,7 @@ DeadSplatter also keeps your systems ram clean by clearing it on a timer. By doi
 
 1) Download Source
 
-2) Install python and requirements if not already installed
+2) Install python and requirements if not already installed (if not using precompiled build)
 
 3) Customize config.json to your needs.
 
